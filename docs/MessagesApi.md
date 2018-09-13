@@ -5,6 +5,7 @@ All URIs are relative to *https://api.thesmsworks.co.uk/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**cancelScheduledJob**](MessagesApi.md#cancelScheduledJob) | **DELETE** /messages/schedule/{messageid} | 
+[**getInboxMessages**](MessagesApi.md#getInboxMessages) | **POST** /messages/inbox | 
 [**getMessageById**](MessagesApi.md#getMessageById) | **GET** /messages/{messageid} | 
 [**getMessages**](MessagesApi.md#getMessages) | **POST** /messages | 
 [**scheduleMessage**](MessagesApi.md#scheduleMessage) | **POST** /message/schedule | 
@@ -56,6 +57,61 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CancelledMessageResponse**](CancelledMessageResponse.md)
+
+### Authorization
+
+[JWT](../README.md#JWT)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json;charset=UTF-8
+
+<a name="getInboxMessages"></a>
+# **getInboxMessages**
+> MessagesResponse getInboxMessages(query)
+
+
+
+Get unread uncoming messages matching your search criteria
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.MessagesApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: JWT
+ApiKeyAuth JWT = (ApiKeyAuth) defaultClient.getAuthentication("JWT");
+JWT.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//JWT.setApiKeyPrefix("Token");
+
+MessagesApi apiInstance = new MessagesApi();
+Query query = new Query(); // Query | 
+try {
+    MessagesResponse result = apiInstance.getInboxMessages(query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling MessagesApi#getInboxMessages");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | [**Query**](Query.md)|  |
+
+### Return type
+
+[**MessagesResponse**](MessagesResponse.md)
 
 ### Authorization
 

@@ -24,26 +24,27 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * ApiKeyResponse
+ * Key/value pair that will be returned to you in the API call response.
  */
+@ApiModel(description = "Key/value pair that will be returned to you in the API call response.")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-09-13T15:06:56.412+01:00")
-public class ApiKeyResponse {
+public class MetaData {
   @SerializedName("key")
   private String key = null;
 
-  @SerializedName("secret")
-  private String secret = null;
+  @SerializedName("value")
+  private String value = null;
 
-  public ApiKeyResponse key(String key) {
+  public MetaData key(String key) {
     this.key = key;
     return this;
   }
 
    /**
-   * Get key
+   * key of the key/value pair
    * @return key
   **/
-  @ApiModelProperty(example = "22795661-48a1-442d-92a3-bc2384836fad", required = true, value = "")
+  @ApiModelProperty(example = "myKey", value = "key of the key/value pair")
   public String getKey() {
     return key;
   }
@@ -52,22 +53,22 @@ public class ApiKeyResponse {
     this.key = key;
   }
 
-  public ApiKeyResponse secret(String secret) {
-    this.secret = secret;
+  public MetaData value(String value) {
+    this.value = value;
     return this;
   }
 
    /**
-   * Get secret
-   * @return secret
+   * value of the key/value pair
+   * @return value
   **/
-  @ApiModelProperty(example = "10045176307448ced2e1b74963d137f2bfaefbdad6fe415df429b64c4d63b856", required = true, value = "")
-  public String getSecret() {
-    return secret;
+  @ApiModelProperty(example = "myValue", value = "value of the key/value pair")
+  public String getValue() {
+    return value;
   }
 
-  public void setSecret(String secret) {
-    this.secret = secret;
+  public void setValue(String value) {
+    this.value = value;
   }
 
 
@@ -79,24 +80,24 @@ public class ApiKeyResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ApiKeyResponse apiKeyResponse = (ApiKeyResponse) o;
-    return Objects.equals(this.key, apiKeyResponse.key) &&
-        Objects.equals(this.secret, apiKeyResponse.secret);
+    MetaData metaData = (MetaData) o;
+    return Objects.equals(this.key, metaData.key) &&
+        Objects.equals(this.value, metaData.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, secret);
+    return Objects.hash(key, value);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ApiKeyResponse {\n");
+    sb.append("class MetaData {\n");
     
     sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }

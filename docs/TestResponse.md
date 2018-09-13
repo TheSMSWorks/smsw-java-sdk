@@ -1,10 +1,10 @@
 
-# MessagesResponse
+# TestResponse
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**messages** | [**MessagesResponseMessages**](MessagesResponseMessages.md) |  | 
+**message** | **String** |  | 
 
 
 

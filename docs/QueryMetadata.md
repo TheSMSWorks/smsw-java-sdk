@@ -1,10 +1,10 @@
 
-# MessagesResponse
+# QueryMetadata
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**messages** | [**MessagesResponseMessages**](MessagesResponseMessages.md) |  | 
+**schema** | [**MetaData**](MetaData.md) |  |  [optional]
 
 
 

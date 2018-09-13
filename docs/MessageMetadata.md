@@ -1,10 +1,10 @@
 
-# HelloWorldResponse
+# MessageMetadata
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**message** | **String** |  | 
+**schema** | [**MetaData**](MetaData.md) |  |  [optional]
 
 
 

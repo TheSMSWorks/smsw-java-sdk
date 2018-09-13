@@ -24,50 +24,29 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * ApiKeyResponse
+ * TestResponse
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-09-13T15:06:56.412+01:00")
-public class ApiKeyResponse {
-  @SerializedName("key")
-  private String key = null;
+public class TestResponse {
+  @SerializedName("message")
+  private String message = null;
 
-  @SerializedName("secret")
-  private String secret = null;
-
-  public ApiKeyResponse key(String key) {
-    this.key = key;
+  public TestResponse message(String message) {
+    this.message = message;
     return this;
   }
 
    /**
-   * Get key
-   * @return key
+   * Get message
+   * @return message
   **/
-  @ApiModelProperty(example = "22795661-48a1-442d-92a3-bc2384836fad", required = true, value = "")
-  public String getKey() {
-    return key;
+  @ApiModelProperty(required = true, value = "")
+  public String getMessage() {
+    return message;
   }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public ApiKeyResponse secret(String secret) {
-    this.secret = secret;
-    return this;
-  }
-
-   /**
-   * Get secret
-   * @return secret
-  **/
-  @ApiModelProperty(example = "10045176307448ced2e1b74963d137f2bfaefbdad6fe415df429b64c4d63b856", required = true, value = "")
-  public String getSecret() {
-    return secret;
-  }
-
-  public void setSecret(String secret) {
-    this.secret = secret;
+  public void setMessage(String message) {
+    this.message = message;
   }
 
 
@@ -79,24 +58,22 @@ public class ApiKeyResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ApiKeyResponse apiKeyResponse = (ApiKeyResponse) o;
-    return Objects.equals(this.key, apiKeyResponse.key) &&
-        Objects.equals(this.secret, apiKeyResponse.secret);
+    TestResponse testResponse = (TestResponse) o;
+    return Objects.equals(this.message, testResponse.message);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, secret);
+    return Objects.hash(message);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ApiKeyResponse {\n");
+    sb.append("class TestResponse {\n");
     
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();
   }

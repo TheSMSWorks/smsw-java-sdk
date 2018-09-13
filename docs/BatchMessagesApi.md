@@ -126,7 +126,7 @@ Name | Type | Description  | Notes
 
 
 
-Schedules a batch of SMS messages to be sent at the date-time you specify
+Schedules a batch of SMS messages to be sent at the date time you specify
 
 ### Example
 ```java

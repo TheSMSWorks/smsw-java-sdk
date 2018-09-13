@@ -21,53 +21,34 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.MetaData;
 import java.io.IOException;
 
 /**
- * ApiKeyResponse
+ * An array of objects containing metadata key/value pairs that have been saved on messages.
  */
+@ApiModel(description = "An array of objects containing metadata key/value pairs that have been saved on messages.")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-09-13T15:06:56.412+01:00")
-public class ApiKeyResponse {
-  @SerializedName("key")
-  private String key = null;
+public class QueryMetadata {
+  @SerializedName("schema")
+  private MetaData schema = null;
 
-  @SerializedName("secret")
-  private String secret = null;
-
-  public ApiKeyResponse key(String key) {
-    this.key = key;
+  public QueryMetadata schema(MetaData schema) {
+    this.schema = schema;
     return this;
   }
 
    /**
-   * Get key
-   * @return key
+   * Get schema
+   * @return schema
   **/
-  @ApiModelProperty(example = "22795661-48a1-442d-92a3-bc2384836fad", required = true, value = "")
-  public String getKey() {
-    return key;
+  @ApiModelProperty(value = "")
+  public MetaData getSchema() {
+    return schema;
   }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public ApiKeyResponse secret(String secret) {
-    this.secret = secret;
-    return this;
-  }
-
-   /**
-   * Get secret
-   * @return secret
-  **/
-  @ApiModelProperty(example = "10045176307448ced2e1b74963d137f2bfaefbdad6fe415df429b64c4d63b856", required = true, value = "")
-  public String getSecret() {
-    return secret;
-  }
-
-  public void setSecret(String secret) {
-    this.secret = secret;
+  public void setSchema(MetaData schema) {
+    this.schema = schema;
   }
 
 
@@ -79,24 +60,22 @@ public class ApiKeyResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ApiKeyResponse apiKeyResponse = (ApiKeyResponse) o;
-    return Objects.equals(this.key, apiKeyResponse.key) &&
-        Objects.equals(this.secret, apiKeyResponse.secret);
+    QueryMetadata queryMetadata = (QueryMetadata) o;
+    return Objects.equals(this.schema, queryMetadata.schema);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, secret);
+    return Objects.hash(schema);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ApiKeyResponse {\n");
+    sb.append("class QueryMetadata {\n");
     
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
+    sb.append("    schema: ").append(toIndentedString(schema)).append("\n");
     sb.append("}");
     return sb.toString();
   }

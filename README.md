@@ -69,7 +69,7 @@ import java.util.*;
 public class AuthApiExample {
 
     public static void main(String[] args) {
-        
+
         AuthApi apiInstance = new AuthApi();
         String customerid = "customerid_example"; // String | The Customer ID
         try {
@@ -84,24 +84,30 @@ public class AuthApiExample {
 
 ```
 
+## Test calls in Postman
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5348de8f62f83cddcee3)
+
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://api.thesmsworks.co.uk/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthApi* | [**keySecret**](docs/AuthApi.md#keySecret) | **GET** /auth/getApiKey | 
-*AuthApi* | [**login**](docs/AuthApi.md#login) | **POST** /auth/token | 
-*BatchMessagesApi* | [**cancelScheduledBatchJob**](docs/BatchMessagesApi.md#cancelScheduledBatchJob) | **DELETE** /batches/schedule/{batchid} | 
-*BatchMessagesApi* | [**getBatchById**](docs/BatchMessagesApi.md#getBatchById) | **GET** /batch/{batchid} | 
-*BatchMessagesApi* | [**scheduleBatch**](docs/BatchMessagesApi.md#scheduleBatch) | **POST** /batch/schedule | 
-*BatchMessagesApi* | [**sendBatch**](docs/BatchMessagesApi.md#sendBatch) | **POST** /batch/send | 
-*MessagesApi* | [**cancelScheduledJob**](docs/MessagesApi.md#cancelScheduledJob) | **DELETE** /messages/schedule/{messageid} | 
-*MessagesApi* | [**getMessageById**](docs/MessagesApi.md#getMessageById) | **GET** /messages/{messageid} | 
-*MessagesApi* | [**getMessages**](docs/MessagesApi.md#getMessages) | **POST** /messages | 
-*MessagesApi* | [**scheduleMessage**](docs/MessagesApi.md#scheduleMessage) | **POST** /message/schedule | 
-*MessagesApi* | [**sendMessage**](docs/MessagesApi.md#sendMessage) | **POST** /message/send | 
-*UtilsApi* | [**hello**](docs/UtilsApi.md#hello) | **GET** /utils/hello | 
+*AuthApi* | [**keySecret**](docs/AuthApi.md#keySecret) | **GET** /auth/getApiKey |
+*AuthApi* | [**login**](docs/AuthApi.md#login) | **POST** /auth/token |
+*BatchMessagesApi* | [**cancelScheduledBatchJob**](docs/BatchMessagesApi.md#cancelScheduledBatchJob) | **DELETE** /batches/schedule/{batchid} |
+*BatchMessagesApi* | [**getBatchById**](docs/BatchMessagesApi.md#getBatchById) | **GET** /batch/{batchid} |
+*BatchMessagesApi* | [**scheduleBatch**](docs/BatchMessagesApi.md#scheduleBatch) | **POST** /batch/schedule |
+*BatchMessagesApi* | [**sendBatch**](docs/BatchMessagesApi.md#sendBatch) | **POST** /batch/send |
+*MessagesApi* | [**cancelScheduledJob**](docs/MessagesApi.md#cancelScheduledJob) | **DELETE** /messages/schedule/{messageid} |
+*MessagesApi* | [**getInboxMessages**](docs/MessagesApi.md#getInboxMessages) | **POST** /messages/inbox |
+*MessagesApi* | [**getMessageById**](docs/MessagesApi.md#getMessageById) | **GET** /messages/{messageid} |
+*MessagesApi* | [**getMessages**](docs/MessagesApi.md#getMessages) | **POST** /messages |
+*MessagesApi* | [**scheduleMessage**](docs/MessagesApi.md#scheduleMessage) | **POST** /message/schedule |
+*MessagesApi* | [**sendMessage**](docs/MessagesApi.md#sendMessage) | **POST** /message/send |
+*UtilsApi* | [**test**](docs/UtilsApi.md#test) | **GET** /utils/test |
 
 
 ## Documentation for Models
@@ -111,16 +117,20 @@ Class | Method | HTTP request | Description
  - [BatchMessageResponse](docs/BatchMessageResponse.md)
  - [CancelledMessageResponse](docs/CancelledMessageResponse.md)
  - [ErrorModel](docs/ErrorModel.md)
- - [HelloWorldResponse](docs/HelloWorldResponse.md)
  - [Login](docs/Login.md)
  - [Message](docs/Message.md)
+ - [MessageMetadata](docs/MessageMetadata.md)
  - [MessageResponse](docs/MessageResponse.md)
+ - [MessageResponseFailurereason](docs/MessageResponseFailurereason.md)
  - [MessagesResponse](docs/MessagesResponse.md)
  - [MessagesResponseMessages](docs/MessagesResponseMessages.md)
+ - [MetaData](docs/MetaData.md)
  - [Query](docs/Query.md)
+ - [QueryMetadata](docs/QueryMetadata.md)
  - [ScheduledBatchResponse](docs/ScheduledBatchResponse.md)
  - [ScheduledMessageResponse](docs/ScheduledMessageResponse.md)
  - [SendMessageResponse](docs/SendMessageResponse.md)
+ - [TestResponse](docs/TestResponse.md)
  - [TokenResponse](docs/TokenResponse.md)
  - [ExtendedErrorModel](docs/ExtendedErrorModel.md)
 
@@ -139,9 +149,4 @@ Authentication schemes defined for the API:
 
 It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
 
-## Test calls in Postman
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/5348de8f62f83cddcee3)
-
-
-
+## Author

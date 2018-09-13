@@ -4,16 +4,16 @@ All URIs are relative to *https://api.thesmsworks.co.uk/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**hello**](UtilsApi.md#hello) | **GET** /utils/hello | 
+[**test**](UtilsApi.md#test) | **GET** /utils/test | 
 
 
-<a name="hello"></a>
-# **hello**
-> HelloWorldResponse hello(name)
+<a name="test"></a>
+# **test**
+> TestResponse test()
 
 
 
-Returns &#39;Hello&#39; to the caller
+Returns the customer ID to the caller
 
 ### Example
 ```java
@@ -23,25 +23,21 @@ Returns &#39;Hello&#39; to the caller
 
 
 UtilsApi apiInstance = new UtilsApi();
-String name = "name_example"; // String | The name of the person to whom to say hello
 try {
-    HelloWorldResponse result = apiInstance.hello(name);
+    TestResponse result = apiInstance.test();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling UtilsApi#hello");
+    System.err.println("Exception when calling UtilsApi#test");
     e.printStackTrace();
 }
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **name** | **String**| The name of the person to whom to say hello | [optional]
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**HelloWorldResponse**](HelloWorldResponse.md)
+[**TestResponse**](TestResponse.md)
 
 ### Authorization
 
