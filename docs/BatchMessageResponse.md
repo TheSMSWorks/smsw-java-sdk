@@ -1,11 +1,14 @@
 
+
 # BatchMessageResponse
 
+
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**batchid** | **String** |  | 
-**status** | **String** |  | 
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**batchid** | **String** |  |  |
+|**status** | **String** |  |  |
 
 
 

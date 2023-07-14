@@ -1,0 +1,1367 @@
+openapi: 3.0.1
+info:
+  description: "The SMS Works provides a low-cost, reliable SMS API for developers.\
+    \ Pay only for delivered texts, all failed messages are refunded."
+  title: The SMS Works API
+  version: 1.9.0
+servers:
+- url: https://api.thesmsworks.co.uk/v1
+paths:
+  /message/send:
+    post:
+      description: Send an SMS Message
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        description: Message properties
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+          description: Success
+        "402":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-codegen-request-body-name: smsMessage
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /message/flash:
+    post:
+      description: "Sends an SMS flash message, which appears on the recipients lock\
+        \ screen"
+      operationId: sendFlashMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        description: Message properties
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/SendMessageResponse'
+          description: Success
+        "402":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-codegen-request-body-name: smsMessage
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+    x-swagger-router-controller: flash
+  /message/schedule:
+    post:
+      description: Schedules an SMS message to be sent at the date-time you specify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        description: Message properties
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ScheduledMessageResponse'
+                type: array
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-codegen-request-body-name: smsMessage
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+    x-swagger-router-controller: smpp-client
+  /messages:
+    post:
+      description: Retrieve up to 1000 messages matching your search criteria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Query'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessageResponse'
+                type: array
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-codegen-request-body-name: query
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /messages/inbox:
+    post:
+      description: Get unread uncoming messages matching your search criteria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Query'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessageResponse'
+                type: array
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-codegen-request-body-name: query
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /messages/failed:
+    post:
+      description: Get failed messages matching your search criteria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Query'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessageResponse'
+                type: array
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-codegen-request-body-name: query
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /messages/schedule:
+    get:
+      description: "Returns a list of messages scheduled from your account, comprising\
+        \ any messages scheduled in the last 3 months and any scheduled to send in\
+        \ the future"
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ScheduledMessagesResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-accepts: application/json;charset=UTF-8
+  /messages/{messageid}:
+    delete:
+      description: Delete the message with the mathcing messageid
+      parameters:
+      - description: The ID of the message you would like returned
+        in: path
+        name: messageid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/DeletedMessageResponse'
+          description: Success
+        "400":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-accepts: application/json;charset=UTF-8
+    get:
+      description: Retrieve a logged message by the message ID
+      parameters:
+      - description: The ID of the message you would like returned
+        in: path
+        name: messageid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+          description: Success
+        "404":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-accepts: application/json;charset=UTF-8
+  /messages/schedule/{messageid}:
+    delete:
+      description: Cancels a scheduled SMS message
+      parameters:
+      - description: The ID of the message you would like returned
+        in: path
+        name: messageid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/CancelledMessageResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - messages
+      x-accepts: application/json;charset=UTF-8
+  /batch/send:
+    post:
+      description: Send a single SMS message to multiple recipients.  Batches may
+        contain up to 5000 messages at a time.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchMessage'
+        description: Message properties
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/BatchMessageResponse'
+          description: Success
+        "402":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - batch messages
+      x-codegen-request-body-name: smsMessage
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /batch/any:
+    post:
+      description: Sends a collection of unique SMS messages. Batches may contain
+        up to 5000 messages at a time.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageArray'
+        description: An array of messages
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/BatchMessageResponse'
+          description: Success
+        "402":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - batch messages
+      x-codegen-request-body-name: messages
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /batch/{batchid}:
+    get:
+      description: Retrieve all messages in a batch with the given batch ID
+      parameters:
+      - description: The ID of the batch you would like returned
+        in: path
+        name: batchid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/MessageResponse'
+                type: array
+          description: Success
+        "404":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - batch messages
+      x-accepts: application/json;charset=UTF-8
+  /batch/schedule:
+    post:
+      description: Schedules a batch of SMS messages to be sent at the date time you
+        specify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchMessage'
+        description: Message properties
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ScheduledBatchResponse'
+          description: Success
+        "402":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - batch messages
+      x-codegen-request-body-name: smsMessage
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /batches/schedule/{batchid}:
+    delete:
+      description: Cancels a scheduled SMS message
+      parameters:
+      - description: The ID of the batch you would like returned
+        in: path
+        name: batchid
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/CancelledMessageResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - batch messages
+      x-accepts: application/json;charset=UTF-8
+  /otp/send:
+    post:
+      description: Generates and sends a One-Time Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OTP'
+        description: OTP properties
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/OTPResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - otp
+      x-codegen-request-body-name: otp
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /otp/verify:
+    post:
+      description: Verifies a One-Time Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OTPVerify'
+        description: One-Time Password
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/OTPVerifyResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - otp
+      x-codegen-request-body-name: passcode
+      x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /credits/balance:
+    get:
+      description: Returns the number of credits currently available on the account
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/CreditsResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - credits
+      x-accepts: application/json;charset=UTF-8
+  /utils/test:
+    get:
+      description: Returns the customer ID to the caller
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/TestResponse'
+          description: Success
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - utils
+      x-accepts: application/json;charset=UTF-8
+  /utils/errors/{errorcode}:
+    get:
+      description: Returns a sample error object for the given error code. Useful
+        for designing code to react to errors when they occur for real.
+      parameters:
+      - description: The code of the error you would like returned
+        in: path
+        name: errorcode
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ExtendedErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - utils
+      x-accepts: application/json;charset=UTF-8
+  /swagger:
+    x-swagger-pipe: swagger_raw
+components:
+  schemas:
+    TestResponse:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    CreditsResponse:
+      example:
+        credits: 180.0
+      properties:
+        credits:
+          description: The number of remaining credits on your SMS Works account.
+            Floating point number.
+          example: 180.0
+          type: number
+      required:
+      - credits
+      type: object
+    Message:
+      description: SMS message object
+      example:
+        schedule: Sun Sep 03 2020 15:34:23 GMT+0100 (BST)
+        metadata:
+        - key: myKey1
+          value: myValue1
+        - key: myKey2
+          value: myValue2
+        sender: YourCompany
+        destination: "447777777777"
+        responseemail:
+        - my.email@mycompany.co.uk
+        - my.other.email@mycompany.co.uk
+        tag: SummerSpecial
+        validity: 1440.0
+        deliveryreporturl: http://your.domain.com/delivery/report/path
+        ttl: 10.0
+        content: Your super awesome message
+      properties:
+        sender:
+          description: The sender of the message. Should be no longer than 11 characters
+            for alphanumeric or 15 characters for numeric sender ID's. No spaces or
+            special characters.
+          example: YourCompany
+          type: string
+        destination:
+          description: Telephone number of the recipient
+          example: "447777777777"
+          type: string
+        content:
+          description: "Message to send to the recipient. Content can be up to 1280\
+            \ characters in length. Messages of 160 characters or fewer are charged\
+            \ 1 credit. If your message is longer than 160 characters then it will\
+            \ be broken down in to chunks of 153 characters before being sent to the\
+            \ recipient's handset, and you will be charged 1 credit for each 153 characters.\
+            \ Messages sent to numbers registered outside the UK will be typically\
+            \ charged double credits, but for certain countries may be charged fractions\
+            \ of credits (e.g. 2.5). Please contact us for rates for each country."
+          example: Your super awesome message
+          type: string
+        deliveryreporturl:
+          description: "The url to which we should POST delivery reports to for this\
+            \ message. If none is specified, we'll use the global delivery report\
+            \ URL that you've configured on your account page."
+          example: http://your.domain.com/delivery/report/path
+          type: string
+        schedule:
+          description: Date at which to send the message. This is only used by the
+            message/schedule service and can be left empty for other services.
+          example: Sun Sep 03 2020 15:34:23 GMT+0100 (BST)
+          type: string
+        tag:
+          description: "An identifying label for the message, which you can use to\
+            \ filter and report on messages you've sent later. Ideal for campaigns.\
+            \ A maximum of 280 characters."
+          example: SummerSpecial
+          type: string
+        ttl:
+          description: The optional number of minutes before the delivery report is
+            deleted. Optional. Omit to prevent delivery report deletion. Integer.
+          example: 10.0
+          type: number
+        responseemail:
+          description: An optional list of email addresses to forward responses to
+            this specific message to. An SMS Works Reply Number is required to use
+            this feature.
+          example:
+          - my.email@mycompany.co.uk
+          - my.other.email@mycompany.co.uk
+          items:
+            type: string
+          type: array
+        metadata:
+          $ref: '#/components/schemas/Message_metadata'
+        validity:
+          description: The optional number of minutes to attempt delivery before the
+            message is marked as EXPIRED. Optional. The default is 2880 minutes. Integer.
+          example: 1440.0
+          maximum: 2880
+          minimum: 1
+          type: number
+      required:
+      - content
+      - destination
+      - sender
+      type: object
+    MetaData:
+      description: Key/value pair that will be returned to you in the API call response.
+      properties:
+        key:
+          description: key of the key/value pair
+          example: myKey
+          type: string
+        value:
+          description: value of the key/value pair
+          example: myValue
+          type: string
+      type: object
+    MessageArray:
+      description: An array of Messages
+      items:
+        $ref: '#/components/schemas/Message'
+      type: array
+    BatchMessage:
+      description: SMS Message Batch
+      example:
+        schedule: Wed Jul 19 2017 20:26:28 GMT+0100 (BST)
+        sender: YourCompany
+        destinations:
+        - "447777777777"
+        - "447777777778"
+        - "447777777779"
+        tag: SummerSpecial
+        validity: 1440.0
+        deliveryreporturl: http://your.domain.com/delivery/report/path
+        ttl: 10.0
+        content: My super awesome batch message
+      properties:
+        sender:
+          description: The sender of the message. Should be no longer than 11 characters
+            for alphanumeric or 15 characters for numeric sender ID's. No spaces or
+            special characters.
+          example: YourCompany
+          type: string
+        destinations:
+          description: Telephone numbers of each of the recipients
+          example:
+          - "447777777777"
+          - "447777777778"
+          - "447777777779"
+          items:
+            type: string
+          type: array
+        content:
+          description: Message to send to the recipient
+          example: My super awesome batch message
+          type: string
+        deliveryreporturl:
+          description: "The url to which we should POST delivery reports to for this\
+            \ message. If none is specified, we'll use the global delivery report\
+            \ URL that you've configured on your account page."
+          example: http://your.domain.com/delivery/report/path
+          type: string
+        schedule:
+          description: Date-time at which to send the batch. This is only used by
+            the batch/schedule service.
+          example: Wed Jul 19 2017 20:26:28 GMT+0100 (BST)
+          type: string
+        tag:
+          description: "An identifying label for the message, which you can use to\
+            \ filter and report on messages you've sent later. Ideal for campaigns.\
+            \ A maximum of 280 characters."
+          example: SummerSpecial
+          type: string
+        ttl:
+          description: The number of minutes before the delivery report is deleted.
+            Optional. Omit to prevent delivery report deletion. Integer.
+          example: 10.0
+          type: number
+        validity:
+          description: The optional number of minutes to attempt delivery before the
+            message is marked as EXPIRED. Optional. The default is 2880 minutes. Integer.
+          example: 1440.0
+          maximum: 2880
+          minimum: 1
+          type: number
+      required:
+      - content
+      - destinations
+      - sender
+      type: object
+    ScheduledMessage:
+      description: the scheduled message content
+      properties:
+        sender:
+          description: The sender of the message. Should be no longer than 11 characters
+            for alphanumeric or 15 characters for numeric sender ID's. No spaces or
+            special characters.
+          example: YourCompany
+          type: string
+        content:
+          description: Message to be sent to the recipient
+          example: My super awesome scheduled message
+          type: string
+        destination:
+          description: "For single scheduled messages, the mobile number of the recipient"
+          example: "447777777777"
+          type: string
+        destinations:
+          description: "For batch messages, the mobile numbers of each of the recipients"
+          example:
+          - "447777777777"
+          - "447777777778"
+          - "447777777779"
+          items:
+            type: string
+          type: array
+        schedule:
+          description: Date-time at which to send the batch. This is only used by
+            the batch/schedule service.
+          example: Wed Jul 19 2017 20:26:28 GMT+0100 (BST)
+          type: string
+      type: object
+    ScheduledMessagesResponse:
+      description: details of a message scheduled to be sent at a specified date and
+        time
+      example:
+        batch: true
+        id: "1910600"
+        message:
+          sender: MyCompany
+          destination: "07777777777"
+          content: Greetings on schedule!
+          schedule: 2021-10-28T14:10:00+01:00
+        status: PROCESSED
+      properties:
+        status:
+          description: "The status of the scheduled message (either 'SCHEDULED', 'PROCESSED'\
+            \ or 'CANCELLED')"
+          example: PROCESSED
+          type: string
+        id:
+          description: The scheduled message ID
+          example: "1910600"
+          type: string
+        batch:
+          description: "Describes whether the a batch of messages has been scheduled,\
+            \ or just a single message"
+          type: boolean
+        message:
+          $ref: '#/components/schemas/ScheduledMessagesResponse_message'
+      type: object
+    Query:
+      description: search parameters for querying the message database
+      example:
+        metadata:
+        - key: myKey1
+          value: myValue1
+        - key: myKey2
+          value: myValue2
+        credits: 2.0
+        sender: YourCompany
+        unread: true
+        destination: "447777777777"
+        limit: 1000.0
+        from: Wed Jul 12 2017 20:26:28 GMT+0100 (BST)
+        skip: 2000.0
+        to: Wed Jul 19 2017 20:26:28 GMT+0100 (BST)
+        keyword: SKYWALKER
+        status: SENT
+      properties:
+        status:
+          description: "The status of the messages you would like returned (either\
+            \ 'SENT', 'DELIVERED', 'EXPIRED', 'UNDELIVERABLE', 'REJECTED' or 'INCOMING')"
+          example: SENT
+          type: string
+        credits:
+          description: The number of credits used on the message. Floating point number.
+          example: 2.0
+          type: number
+        destination:
+          description: The phone number of the recipient. Start UK numbers with 44
+            and drop the leading 0.
+          example: "447777777777"
+          type: string
+        sender:
+          description: The sender of the message (this can be the configured sender
+            name for an outbound message or the senders phone number for an inbound
+            message).
+          example: YourCompany
+          type: string
+        keyword:
+          description: The keyword used in the inbound message
+          example: SKYWALKER
+          type: string
+        from:
+          description: The date-time from which you would like matching messages
+          example: Wed Jul 12 2017 20:26:28 GMT+0100 (BST)
+          type: string
+        to:
+          description: The date-time to which you would like matching messages
+          example: Wed Jul 19 2017 20:26:28 GMT+0100 (BST)
+          type: string
+        limit:
+          description: The maximum number of messages that you would like returned
+            in this call. The default is 1000.
+          example: 1000.0
+          type: number
+        skip:
+          description: "The number of results you would like to ignore before returning\
+            \ messages. In combination with the 'limit' parameter his can be used\
+            \ to page results, so that you can deal with a limited number in your\
+            \ logic at each time."
+          example: 2000.0
+          type: number
+        unread:
+          description: "In queries for incoming messages ('status' is 'INCOMING'),\
+            \ specify whether you explicitly want unread messages (true) or read messages\
+            \ (false). Omit this parameter in other circumstances."
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/Query_metadata'
+      type: object
+    SendMessageResponse:
+      example:
+        credits: 180.0
+        messageid: "123456789"
+        status: SENT
+        creditsUsed: 2.0
+      properties:
+        messageid:
+          example: "123456789"
+          type: string
+        status:
+          example: SENT
+          type: string
+        credits:
+          description: The number of remaining credits on your SMS Works account.
+            Floating point number.
+          example: 180.0
+          type: number
+        creditsUsed:
+          description: The number of credits used to send the message. Floating point
+            number.
+          example: 2.0
+          type: number
+      required:
+      - credits
+      - creditsUsed
+      - messageid
+      - status
+      type: object
+    ScheduledMessageResponse:
+      example:
+        messageid: "123456789"
+        status: SCHEDULED
+      properties:
+        messageid:
+          example: "123456789"
+          type: string
+        status:
+          example: SCHEDULED
+          type: string
+      required:
+      - messageid
+      - status
+      type: object
+    ScheduledBatchResponse:
+      example:
+        batchid: "3200562"
+        status: SCHEDULED
+      properties:
+        batchid:
+          example: "3200562"
+          type: string
+        status:
+          example: SCHEDULED
+          type: string
+      required:
+      - batchid
+      - status
+      type: object
+    CancelledMessageResponse:
+      example:
+        messageid: "5620320"
+        status: CANCELLED
+      properties:
+        messageid:
+          example: "5620320"
+          type: string
+        status:
+          example: CANCELLED
+          type: string
+      required:
+      - messageid
+      - status
+      type: object
+    DeletedMessageResponse:
+      example:
+        messageid: "5620320"
+        status: DELETED
+      properties:
+        messageid:
+          example: "5620320"
+          type: string
+        status:
+          example: DELETED
+          type: string
+      required:
+      - messageid
+      - status
+      type: object
+    BatchMessageResponse:
+      example:
+        batchid: "2586749"
+        status: SCHEDULED
+      properties:
+        batchid:
+          example: "2586749"
+          type: string
+        status:
+          example: SCHEDULED
+          type: string
+      required:
+      - batchid
+      - status
+      type: object
+    MessageResponse:
+      example:
+        identifier: "7777777777"
+        created: Wed Jul 19 2017 20:53:46 GMT+0100 (BST)
+        destination: 447777777777
+        messageid: "123456789"
+        batchid: "2586749"
+        deliveryreporturl: https://your.domain.com/delivery/report/path
+        content: My super awesome message
+        schedule: Wed Jul 19 2017 20:53:45 GMT+0100 (BST)
+        sender: YourCompany
+        customerid: 0fca8c3c-6cbc-11e7-8154-a6006ad3dba0
+        modified: Wed Jul 19 2017 20:53:49 GMT+0100 (BST)
+        failurereason:
+          code: 34.0
+          permanent: false
+          details: Handset error
+        id: "123456789"
+        tag: campaign2
+        keyword: CALRISSIAN
+        status: DELIVERED
+      properties:
+        batchid:
+          example: "2586749"
+          type: string
+        content:
+          example: My super awesome message
+          type: string
+        created:
+          example: Wed Jul 19 2017 20:53:46 GMT+0100 (BST)
+          type: string
+        customerid:
+          example: 0fca8c3c-6cbc-11e7-8154-a6006ad3dba0
+          type: string
+        deliveryreporturl:
+          example: https://your.domain.com/delivery/report/path
+          type: string
+        destination:
+          example: 447777777777
+          type: number
+        failurereason:
+          $ref: '#/components/schemas/MessageResponse_failurereason'
+        id:
+          example: "123456789"
+          type: string
+        identifier:
+          example: "7777777777"
+          type: string
+        keyword:
+          example: CALRISSIAN
+          type: string
+        messageid:
+          example: "123456789"
+          type: string
+        modified:
+          example: Wed Jul 19 2017 20:53:49 GMT+0100 (BST)
+          type: string
+        schedule:
+          example: Wed Jul 19 2017 20:53:45 GMT+0100 (BST)
+          type: string
+        status:
+          example: DELIVERED
+          type: string
+        sender:
+          example: YourCompany
+          type: string
+        tag:
+          example: campaign2
+          type: string
+      required:
+      - content
+      - created
+      - customerid
+      - destination
+      - messageid
+      - modified
+      - schedule
+      - sender
+      - status
+      - tag
+      type: object
+    OTP:
+      description: Parameters for the generation and sending of One-Time Passwords
+      example:
+        template: "This is your one-time passcode - {{passcode}}"
+        metadata:
+          customer_id: ABC123
+          cart_id: XYZ789
+        sender: YourCompany
+        destination: "7777777777"
+        validity: 300.0
+        passcode: "123456"
+      properties:
+        sender:
+          description: The sender of the message. Should be no longer than 11 characters
+            for alphanumeric or 15 characters for numeric sender ID's. No spaces or
+            special characters.
+          example: YourCompany
+          type: string
+        destination:
+          description: The phone number of the recipient.
+          example: "7777777777"
+          type: string
+        template:
+          description: "A template to use as the content for the message. You must\
+            \ include the '{{passcode}}' placeholder, which will be replaced by the\
+            \ generated passcode when the message is sent. Optional."
+          example: "This is your one-time passcode - {{passcode}}"
+          type: string
+        validity:
+          description: The length of time in seconds for which the generated passcode
+            should be valid. Optional.
+          example: 300.0
+          type: number
+        passcode:
+          description: A passcode you supply for use in the message template. This
+            will be stored on the OTP record in our system for later verification.
+            Optional.
+          example: "123456"
+          type: string
+        metadata:
+          description: "A JSON object of no longer than 1024 bytes, containing as\
+            \ many parameters as you wish, to store data for use in your application.\
+            \ This will be returned when you verify the passcode."
+          example:
+            customer_id: ABC123
+            cart_id: XYZ789
+          properties: {}
+          type: object
+      type: object
+    OTPResponse:
+      description: Response schema for the /otp/send method
+      example:
+        credits: 561.0
+        messageparts: 1.0
+        messageid: 52692416-ce9e-45ad-aa1e-14fcee8fa662
+        status: SENT
+        creditsUsed: 1.0
+      properties:
+        messageid:
+          description: The messageid of the SMS used to send the OTP. Save this in
+            your application to use when verifying passcodes.
+          example: 52692416-ce9e-45ad-aa1e-14fcee8fa662
+          type: string
+        status:
+          description: The initial status of the OTP message.
+          example: SENT
+          type: string
+        credits:
+          description: The credit balance on your account
+          example: 561.0
+          type: number
+        creditsUsed:
+          description: The number of credits used to send this message
+          example: 1.0
+          type: number
+        messageparts:
+          description: The number of message parts used to send this message
+          example: 1.0
+          type: number
+      type: object
+    OTPVerify:
+      description: Schema for the /oyp/verify method
+      example:
+        passcode: "123456"
+      properties:
+        passcode:
+          description: One-Time Passcode submitted to your application
+          example: "123456"
+          type: string
+      type: object
+    OTPVerifyResponse:
+      description: Response schema for the /otp/verify method
+      example:
+        metadata:
+          customer_id: ABC123
+          cart_id: XYZ789
+        expires: Tue Apr 25 2023 16:57:00 GMT+0100 (British Summer Time)
+        created: Tue Apr 25 2023 16:47:00 GMT+0100 (British Summer Time)
+        destination: "447777000000"
+        modified: Tue Apr 25 2023 16:49:20 GMT+0100 (British Summer Time)
+        validity: 300.0
+        passcode: 123456.0
+        status: VERIFIED
+      properties:
+        destination:
+          description: The mobile number that the OTP was sent to
+          example: "447777000000"
+          type: string
+        status:
+          description: "The status of the OTP. If the passcode is used within the\
+            \ validity period then this will be 'VERIFIED', otherwise it will be 'EXPIRED'"
+          example: VERIFIED
+          type: string
+        passcode:
+          description: The passcode used.
+          example: 123456.0
+          type: number
+        validity:
+          description: The length of time in seconds for which the generated passcode
+            is valid.
+          example: 300.0
+          type: number
+        metadata:
+          description: "A JSON object storing data supplied when this passcode was\
+            \ generated, for use in your application."
+          example:
+            customer_id: ABC123
+            cart_id: XYZ789
+          properties: {}
+          type: object
+        created:
+          description: The ISO 8601 date/time at which this OTP was created
+          example: Tue Apr 25 2023 16:47:00 GMT+0100 (British Summer Time)
+          type: string
+        expires:
+          description: The ISO 8601 date/time at which this OTP expires
+          example: Tue Apr 25 2023 16:57:00 GMT+0100 (British Summer Time)
+          type: string
+        modified:
+          description: The ISO 8601 date/time at which this OTP was modified (typically
+            when it was verified)
+          example: Tue Apr 25 2023 16:49:20 GMT+0100 (British Summer Time)
+          type: string
+      type: object
+    ErrorModel:
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    ExtendedErrorModel:
+      allOf:
+      - $ref: '#/components/schemas/ErrorModel'
+      - $ref: '#/components/schemas/ExtendedErrorModel_allOf'
+    Message_metadata:
+      example:
+      - key: myKey1
+        value: myValue1
+      - key: myKey2
+        value: myValue2
+      properties:
+        schema:
+          $ref: '#/components/schemas/MetaData'
+      type: object
+    ScheduledMessagesResponse_message:
+      example:
+        sender: MyCompany
+        destination: "07777777777"
+        content: Greetings on schedule!
+        schedule: 2021-10-28T14:10:00+01:00
+      properties:
+        schema:
+          $ref: '#/components/schemas/ScheduledMessage'
+      type: object
+    Query_metadata:
+      description: An array of objects containing metadata key/value pairs that have
+        been saved on messages.
+      example:
+      - key: myKey1
+        value: myValue1
+      - key: myKey2
+        value: myValue2
+      properties:
+        schema:
+          $ref: '#/components/schemas/MetaData'
+      type: object
+    MessageResponse_failurereason:
+      example:
+        code: 34.0
+        permanent: false
+        details: Handset error
+      properties:
+        code:
+          description: Numeric code that defines the error. Integer.
+          example: 34.0
+          type: number
+        details:
+          example: Handset error
+          type: string
+        permanent:
+          example: false
+          type: boolean
+      type: object
+    ExtendedErrorModel_allOf:
+      properties:
+        errorCode:
+          description: Numeric code used to identify the error. Integer.
+          type: number
+        status:
+          type: string
+        permanent:
+          type: boolean
+      required:
+      - errorCode
+      - status
+      type: object
+      example: null
+  securitySchemes:
+    JWT:
+      in: header
+      name: Authorization
+      type: apiKey
+x-original-swagger-version: "2.0"
+

@@ -1,12 +1,16 @@
 
+
 # ExtendedErrorModel
 
+
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**message** | **String** |  | 
-**errorCode** | [**BigDecimal**](BigDecimal.md) |  | 
-**status** | **String** |  | 
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**message** | **String** |  |  |
+|**errorCode** | **BigDecimal** | Numeric code used to identify the error. Integer. |  |
+|**status** | **String** |  |  |
+|**permanent** | **Boolean** |  |  [optional] |
 
 
 
