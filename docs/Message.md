@@ -18,6 +18,7 @@ SMS message object
 |**responseemail** | **List&lt;String&gt;** | An optional list of email addresses to forward responses to this specific message to. An SMS Works Reply Number is required to use this feature. |  [optional] |
 |**metadata** | [**MessageMetadata**](MessageMetadata.md) |  |  [optional] |
 |**validity** | **BigDecimal** | The optional number of minutes to attempt delivery before the message is marked as EXPIRED. Optional. The default is 2880 minutes. Integer. |  [optional] |
+|**ai** | **Boolean** | Used to determine whether The SMS Works AI Optimiser should be used in the event that the message is just longer than the 1 or 2 credit boundary. This setting overrides the AI Optimiser configuration on your SMS Works account. |  [optional] |
 
 
 

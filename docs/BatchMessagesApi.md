@@ -41,7 +41,7 @@ public class Example {
     //JWT.setApiKeyPrefix("Token");
 
     BatchMessagesApi apiInstance = new BatchMessagesApi(defaultClient);
-    List<Message> messages = Arrays.asList(); // List<Message> | An array of messages
+    Object messages = null; // Object | An array of messages
     try {
       BatchMessageResponse result = apiInstance.batchAnyPost(messages);
       System.out.println(result);
@@ -60,7 +60,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **messages** | [**List&lt;Message&gt;**](Message.md)| An array of messages | |
+| **messages** | **Object**| An array of messages | |
 
 ### Return type
 

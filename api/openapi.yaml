@@ -1,9 +1,18 @@
 openapi: 3.0.1
 info:
+  contact:
+    email: support@thesmsworks.co.uk
+    name: SMS Works Support
+    url: https://thesmsworks.co.uk/contact
   description: "The SMS Works provides a low-cost, reliable SMS API for developers.\
-    \ Pay only for delivered texts, all failed messages are refunded."
+    \ Pay only for delivered texts, all failed UK messages are refunded."
+  termsOfService: https://thesmsworks.co.uk/terms
   title: The SMS Works API
   version: 1.9.0
+  x-logo:
+    url: https://qa.thesmsworks.co.uk/docs/logo-transparent.png
+    altText: The SMS Works
+    href: https://thesmsworks.co.uk
 servers:
 - url: https://api.thesmsworks.co.uk/v1
 paths:
@@ -39,7 +48,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-codegen-request-body-name: smsMessage
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -77,7 +86,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-codegen-request-body-name: smsMessage
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -110,7 +119,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-codegen-request-body-name: smsMessage
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -142,7 +151,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-codegen-request-body-name: query
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -173,7 +182,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-codegen-request-body-name: query
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -204,7 +213,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-codegen-request-body-name: query
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -229,18 +238,20 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-accepts: application/json;charset=UTF-8
   /messages/{messageid}:
     delete:
       description: Delete the message with the mathcing messageid
       parameters:
       - description: The ID of the message you would like returned
+        explode: false
         in: path
         name: messageid
         required: true
         schema:
           type: string
+        style: simple
       responses:
         "200":
           content:
@@ -263,17 +274,19 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-accepts: application/json;charset=UTF-8
     get:
       description: Retrieve a logged message by the message ID
       parameters:
       - description: The ID of the message you would like returned
+        explode: false
         in: path
         name: messageid
         required: true
         schema:
           type: string
+        style: simple
       responses:
         "200":
           content:
@@ -296,18 +309,20 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-accepts: application/json;charset=UTF-8
   /messages/schedule/{messageid}:
     delete:
       description: Cancels a scheduled SMS message
       parameters:
       - description: The ID of the message you would like returned
+        explode: false
         in: path
         name: messageid
         required: true
         schema:
           type: string
+        style: simple
       responses:
         "200":
           content:
@@ -324,7 +339,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - messages
+      - Messages
       x-accepts: application/json;charset=UTF-8
   /batch/send:
     post:
@@ -359,7 +374,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - batch messages
+      - Batch Messages
       x-codegen-request-body-name: smsMessage
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -396,7 +411,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - batch messages
+      - Batch Messages
       x-codegen-request-body-name: messages
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -405,11 +420,13 @@ paths:
       description: Retrieve all messages in a batch with the given batch ID
       parameters:
       - description: The ID of the batch you would like returned
+        explode: false
         in: path
         name: batchid
         required: true
         schema:
           type: string
+        style: simple
       responses:
         "200":
           content:
@@ -434,7 +451,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - batch messages
+      - Batch Messages
       x-accepts: application/json;charset=UTF-8
   /batch/schedule:
     post:
@@ -469,7 +486,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - batch messages
+      - Batch Messages
       x-codegen-request-body-name: smsMessage
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
@@ -478,11 +495,13 @@ paths:
       description: Cancels a scheduled SMS message
       parameters:
       - description: The ID of the batch you would like returned
+        explode: false
         in: path
         name: batchid
         required: true
         schema:
           type: string
+        style: simple
       responses:
         "200":
           content:
@@ -499,7 +518,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - batch messages
+      - Batch Messages
       x-accepts: application/json;charset=UTF-8
   /otp/send:
     post:
@@ -527,13 +546,13 @@ paths:
       security:
       - JWT: []
       tags:
-      - otp
+      - One-Time Password
       x-codegen-request-body-name: otp
       x-content-type: application/json
       x-accepts: application/json;charset=UTF-8
   /otp/verify:
     post:
-      description: Verifies a One-Time Password
+      description: Generates and sends a One-Time Password
       requestBody:
         content:
           application/json:
@@ -548,6 +567,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/OTPVerifyResponse'
           description: Success
+        "404":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
         default:
           content:
             application/json;charset=UTF-8:
@@ -557,9 +582,45 @@ paths:
       security:
       - JWT: []
       tags:
-      - otp
+      - One-Time Password
       x-codegen-request-body-name: passcode
       x-content-type: application/json
+      x-accepts: application/json;charset=UTF-8
+  /otp/{messageid}:
+    get:
+      description: Retrieve an OTP by it's message ID
+      parameters:
+      - description: The ID of the OTP you would like returned
+        explode: false
+        in: path
+        name: messageid
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/OTPVerifyResponse'
+          description: Success
+        "404":
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+        default:
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorModel'
+          description: Error
+      security:
+      - JWT: []
+      tags:
+      - One-Time Password
       x-accepts: application/json;charset=UTF-8
   /credits/balance:
     get:
@@ -580,7 +641,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - credits
+      - Credits
       x-accepts: application/json;charset=UTF-8
   /utils/test:
     get:
@@ -601,7 +662,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - utils
+      - Utils
       x-accepts: application/json;charset=UTF-8
   /utils/errors/{errorcode}:
     get:
@@ -609,11 +670,13 @@ paths:
         for designing code to react to errors when they occur for real.
       parameters:
       - description: The code of the error you would like returned
+        explode: false
         in: path
         name: errorcode
         required: true
         schema:
           type: string
+        style: simple
       responses:
         default:
           content:
@@ -624,7 +687,7 @@ paths:
       security:
       - JWT: []
       tags:
-      - utils
+      - Utils
       x-accepts: application/json;charset=UTF-8
   /swagger:
     x-swagger-pipe: swagger_raw
@@ -641,12 +704,12 @@ components:
       type: object
     CreditsResponse:
       example:
-        credits: 180.0
+        credits: 180
       properties:
         credits:
           description: The number of remaining credits on your SMS Works account.
             Floating point number.
-          example: 180.0
+          example: 180
           type: number
       required:
       - credits
@@ -662,13 +725,14 @@ components:
           value: myValue2
         sender: YourCompany
         destination: "447777777777"
+        ai: true
         responseemail:
         - my.email@mycompany.co.uk
         - my.other.email@mycompany.co.uk
         tag: SummerSpecial
-        validity: 1440.0
+        validity: 1440
         deliveryreporturl: http://your.domain.com/delivery/report/path
-        ttl: 10.0
+        ttl: 10
         content: Your super awesome message
       properties:
         sender:
@@ -712,7 +776,7 @@ components:
         ttl:
           description: The optional number of minutes before the delivery report is
             deleted. Optional. Omit to prevent delivery report deletion. Integer.
-          example: 10.0
+          example: 10
           type: number
         responseemail:
           description: An optional list of email addresses to forward responses to
@@ -729,10 +793,16 @@ components:
         validity:
           description: The optional number of minutes to attempt delivery before the
             message is marked as EXPIRED. Optional. The default is 2880 minutes. Integer.
-          example: 1440.0
+          example: 1440
           maximum: 2880
           minimum: 1
           type: number
+        ai:
+          description: Used to determine whether The SMS Works AI Optimiser should
+            be used in the event that the message is just longer than the 1 or 2 credit
+            boundary. This setting overrides the AI Optimiser configuration on your
+            SMS Works account.
+          type: boolean
       required:
       - content
       - destination
@@ -752,9 +822,7 @@ components:
       type: object
     MessageArray:
       description: An array of Messages
-      items:
-        $ref: '#/components/schemas/Message'
-      type: array
+      type: object
     BatchMessage:
       description: SMS Message Batch
       example:
@@ -764,10 +832,11 @@ components:
         - "447777777777"
         - "447777777778"
         - "447777777779"
+        ai: true
         tag: SummerSpecial
-        validity: 1440.0
+        validity: 1440
         deliveryreporturl: http://your.domain.com/delivery/report/path
-        ttl: 10.0
+        ttl: 10
         content: My super awesome batch message
       properties:
         sender:
@@ -809,15 +878,21 @@ components:
         ttl:
           description: The number of minutes before the delivery report is deleted.
             Optional. Omit to prevent delivery report deletion. Integer.
-          example: 10.0
+          example: 10
           type: number
         validity:
           description: The optional number of minutes to attempt delivery before the
             message is marked as EXPIRED. Optional. The default is 2880 minutes. Integer.
-          example: 1440.0
+          example: 1440
           maximum: 2880
           minimum: 1
           type: number
+        ai:
+          description: Used to determine whether The SMS Works AI Optimiser should
+            be used in the event that the message is just longer than the 1 or 2 credit
+            boundary. This setting overrides the AI Optimiser configuration on your
+            SMS Works account.
+          type: boolean
       required:
       - content
       - destinations
@@ -865,7 +940,7 @@ components:
           sender: MyCompany
           destination: "07777777777"
           content: Greetings on schedule!
-          schedule: 2021-10-28T14:10:00+01:00
+          schedule: 2021-10-28T13:10:00.000Z
         status: PROCESSED
       properties:
         status:
@@ -892,13 +967,13 @@ components:
           value: myValue1
         - key: myKey2
           value: myValue2
-        credits: 2.0
+        credits: 2
         sender: YourCompany
         unread: true
         destination: "447777777777"
-        limit: 1000.0
+        limit: 1000
         from: Wed Jul 12 2017 20:26:28 GMT+0100 (BST)
-        skip: 2000.0
+        skip: 2000
         to: Wed Jul 19 2017 20:26:28 GMT+0100 (BST)
         keyword: SKYWALKER
         status: SENT
@@ -910,7 +985,7 @@ components:
           type: string
         credits:
           description: The number of credits used on the message. Floating point number.
-          example: 2.0
+          example: 2
           type: number
         destination:
           description: The phone number of the recipient. Start UK numbers with 44
@@ -938,14 +1013,14 @@ components:
         limit:
           description: The maximum number of messages that you would like returned
             in this call. The default is 1000.
-          example: 1000.0
+          example: 1000
           type: number
         skip:
           description: "The number of results you would like to ignore before returning\
             \ messages. In combination with the 'limit' parameter his can be used\
             \ to page results, so that you can deal with a limited number in your\
             \ logic at each time."
-          example: 2000.0
+          example: 2000
           type: number
         unread:
           description: "In queries for incoming messages ('status' is 'INCOMING'),\
@@ -957,10 +1032,10 @@ components:
       type: object
     SendMessageResponse:
       example:
-        credits: 180.0
+        credits: 180
         messageid: "123456789"
         status: SENT
-        creditsUsed: 2.0
+        creditsUsed: 2
       properties:
         messageid:
           example: "123456789"
@@ -971,12 +1046,12 @@ components:
         credits:
           description: The number of remaining credits on your SMS Works account.
             Floating point number.
-          example: 180.0
+          example: 180
           type: number
         creditsUsed:
           description: The number of credits used to send the message. Floating point
             number.
-          example: 2.0
+          example: 2
           type: number
       required:
       - credits
@@ -1073,7 +1148,7 @@ components:
         customerid: 0fca8c3c-6cbc-11e7-8154-a6006ad3dba0
         modified: Wed Jul 19 2017 20:53:49 GMT+0100 (BST)
         failurereason:
-          code: 34.0
+          code: 34
           permanent: false
           details: Handset error
         id: "123456789"
@@ -1149,7 +1224,8 @@ components:
           cart_id: XYZ789
         sender: YourCompany
         destination: "7777777777"
-        validity: 300.0
+        length: "{}"
+        validity: 300
         passcode: "123456"
       properties:
         sender:
@@ -1162,6 +1238,11 @@ components:
           description: The phone number of the recipient.
           example: "7777777777"
           type: string
+        length:
+          description: "The length of the generated passcode. The default length is\
+            \ 6 characters, which will apply if this parameter is omitted. All generated\
+            \ passcodes are numeric. Optional."
+          type: object
         template:
           description: "A template to use as the content for the message. You must\
             \ include the '{{passcode}}' placeholder, which will be replaced by the\
@@ -1171,7 +1252,7 @@ components:
         validity:
           description: The length of time in seconds for which the generated passcode
             should be valid. Optional.
-          example: 300.0
+          example: 300
           type: number
         passcode:
           description: A passcode you supply for use in the message template. This
@@ -1192,11 +1273,11 @@ components:
     OTPResponse:
       description: Response schema for the /otp/send method
       example:
-        credits: 561.0
-        messageparts: 1.0
+        credits: 561
+        messageparts: 1
         messageid: 52692416-ce9e-45ad-aa1e-14fcee8fa662
         status: SENT
-        creditsUsed: 1.0
+        creditsUsed: 1
       properties:
         messageid:
           description: The messageid of the SMS used to send the OTP. Save this in
@@ -1209,15 +1290,15 @@ components:
           type: string
         credits:
           description: The credit balance on your account
-          example: 561.0
+          example: 561
           type: number
         creditsUsed:
           description: The number of credits used to send this message
-          example: 1.0
+          example: 1
           type: number
         messageparts:
           description: The number of message parts used to send this message
-          example: 1.0
+          example: 1
           type: number
       type: object
     OTPVerify:
@@ -1240,8 +1321,8 @@ components:
         created: Tue Apr 25 2023 16:47:00 GMT+0100 (British Summer Time)
         destination: "447777000000"
         modified: Tue Apr 25 2023 16:49:20 GMT+0100 (British Summer Time)
-        validity: 300.0
-        passcode: 123456.0
+        validity: 300
+        passcode: 123456
         status: VERIFIED
       properties:
         destination:
@@ -1255,12 +1336,12 @@ components:
           type: string
         passcode:
           description: The passcode used.
-          example: 123456.0
+          example: 123456
           type: number
         validity:
           description: The length of time in seconds for which the generated passcode
             is valid.
-          example: 300.0
+          example: 300
           type: number
         metadata:
           description: "A JSON object storing data supplied when this passcode was\
@@ -1294,7 +1375,18 @@ components:
     ExtendedErrorModel:
       allOf:
       - $ref: '#/components/schemas/ErrorModel'
-      - $ref: '#/components/schemas/ExtendedErrorModel_allOf'
+      - properties:
+          errorCode:
+            description: Numeric code used to identify the error. Integer.
+            type: number
+          status:
+            type: string
+          permanent:
+            type: boolean
+        required:
+        - errorCode
+        - status
+        type: object
     Message_metadata:
       example:
       - key: myKey1
@@ -1310,7 +1402,7 @@ components:
         sender: MyCompany
         destination: "07777777777"
         content: Greetings on schedule!
-        schedule: 2021-10-28T14:10:00+01:00
+        schedule: 2021-10-28T13:10:00.000Z
       properties:
         schema:
           $ref: '#/components/schemas/ScheduledMessage'
@@ -1329,13 +1421,13 @@ components:
       type: object
     MessageResponse_failurereason:
       example:
-        code: 34.0
+        code: 34
         permanent: false
         details: Handset error
       properties:
         code:
           description: Numeric code that defines the error. Integer.
-          example: 34.0
+          example: 34
           type: number
         details:
           example: Handset error
@@ -1344,24 +1436,9 @@ components:
           example: false
           type: boolean
       type: object
-    ExtendedErrorModel_allOf:
-      properties:
-        errorCode:
-          description: Numeric code used to identify the error. Integer.
-          type: number
-        status:
-          type: string
-        permanent:
-          type: boolean
-      required:
-      - errorCode
-      - status
-      type: object
-      example: null
   securitySchemes:
     JWT:
       in: header
       name: Authorization
       type: apiKey
-x-original-swagger-version: "2.0"
 
